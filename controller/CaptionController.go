@@ -17,17 +17,25 @@ func CreateCaption(c *gin.Context) {
 		Baris3 string `json:"baris3"`
 		Baris4 string `json:"baris4"`
 	}{}
+
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
 	var caption models.Caption
+
+	if err := config.DB.Raw("SELECT * FROM captions WHERE status = false AND email = ?", input.Email).Scan(&caption).Error; err != nil {
+		c.JSON(http.StatusNotImplemented, gin.H{"error": "the caption by email already submit"})
+		return
+	}
 
 	caption.Email = input.Email
 	caption.Baris1 = input.Baris1
 	caption.Baris2 = input.Baris2
 	caption.Baris3 = input.Baris3
 	caption.Baris4 = input.Baris4
+	caption.Status = false
 
 	if err := config.DB.Create(&caption).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
