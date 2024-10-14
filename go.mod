@@ -1,6 +1,6 @@
 module muslim_pro
 
-go 1.18
+go 1.19
 
 require (
 	github.com/bytedance/sonic v1.11.6 // indirect
