@@ -1,0 +1,300 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/captions": {
+            "get": {
+                "description": "Get a list of all captions",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "captions"
+                ],
+                "summary": "Get all captions",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Caption"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new caption with the input payload",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "captions"
+                ],
+                "summary": "Create a new caption",
+                "parameters": [
+                    {
+                        "description": "Create caption",
+                        "name": "caption",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreateCaptionInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Caption"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/captions/random": {
+            "get": {
+                "description": "Get a random caption with status true",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "captions"
+                ],
+                "summary": "Get a random caption",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Caption"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/captions/{id}": {
+            "get": {
+                "description": "Get a caption by its ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "captions"
+                ],
+                "summary": "Get a caption",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Caption ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Caption"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a caption by its ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "captions"
+                ],
+                "summary": "Delete a caption",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Caption ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Caption deleted",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/captions/{id}/status": {
+            "put": {
+                "description": "Update the status of a caption to true",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "captions"
+                ],
+                "summary": "Update caption status",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Caption ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/models.Caption"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "controller.CreateCaptionInput": {
+            "type": "object",
+            "required": [
+                "email"
+            ],
+            "properties": {
+                "baris1": {
+                    "type": "string"
+                },
+                "baris2": {
+                    "type": "string"
+                },
+                "baris3": {
+                    "type": "string"
+                },
+                "baris4": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Caption": {
+            "type": "object",
+            "properties": {
+                "baris1": {
+                    "type": "string"
+                },
+                "baris2": {
+                    "type": "string"
+                },
+                "baris3": {
+                    "type": "string"
+                },
+                "baris4": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "boolean"
+                }
+            }
+        }
+    }
+}

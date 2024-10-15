@@ -1,0 +1,196 @@
+definitions:
+  controller.CreateCaptionInput:
+    properties:
+      baris1:
+        type: string
+      baris2:
+        type: string
+      baris3:
+        type: string
+      baris4:
+        type: string
+      email:
+        type: string
+    required:
+    - email
+    type: object
+  models.Caption:
+    properties:
+      baris1:
+        type: string
+      baris2:
+        type: string
+      baris3:
+        type: string
+      baris4:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      status:
+        type: boolean
+    type: object
+info:
+  contact: {}
+paths:
+  /captions:
+    get:
+      description: Get a list of all captions
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Caption'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get all captions
+      tags:
+      - captions
+    post:
+      consumes:
+      - application/json
+      description: Create a new caption with the input payload
+      parameters:
+      - description: Create caption
+        in: body
+        name: caption
+        required: true
+        schema:
+          $ref: '#/definitions/controller.CreateCaptionInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Caption'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create a new caption
+      tags:
+      - captions
+  /captions/{id}:
+    delete:
+      description: Delete a caption by its ID
+      parameters:
+      - description: Caption ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Caption deleted
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Delete a caption
+      tags:
+      - captions
+    get:
+      description: Get a caption by its ID
+      parameters:
+      - description: Caption ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Caption'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get a caption
+      tags:
+      - captions
+  /captions/{id}/status:
+    put:
+      description: Update the status of a caption to true
+      parameters:
+      - description: Caption ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/models.Caption'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Update caption status
+      tags:
+      - captions
+  /captions/random:
+    get:
+      description: Get a random caption with status true
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Caption'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get a random caption
+      tags:
+      - captions
+swagger: "2.0"
